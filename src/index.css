@@ -1,0 +1,257 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+:root {
+  --primary: #12f2d0;
+  --light: #eeeeee;
+  --dark: #2a2f43;
+  --border-colour: rgba(238, 238, 238, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
+}
+
+input {
+  font: inherit;
+  border: initial;
+  resize: none;
+  outline: initial; /* create alternative for focus state */
+}
+
+button {
+  border-radius: 0;
+  text-align: inherit;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  color: inherit;
+  font: inherit;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  background: rgb(123, 0, 245);
+  background: linear-gradient(
+    0deg,
+    rgba(123, 0, 245, 1) 0%,
+    rgba(56, 93, 177, 1) 100%
+  );
+}
+
+main {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  height: 100vh;
+  padding: 1rem;
+}
+
+.main_title {
+  color: var(--light);
+  font-weight: 800;
+  font-size: 48px;
+  height: auto;
+}
+
+.company_search_form {
+  height: 62px;
+  background-color: rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
+  overflow: hidden;
+
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.company_search {
+  position: relative;
+  height: 100%;
+}
+
+#company_search_input {
+  height: 100%;
+  width: 100%;
+  padding: 8px;
+  background-color: transparent;
+  color: var(--light);
+}
+
+#company_search_input::placeholder {
+  color: var(--light);
+  opacity: 0.4;
+}
+
+#search_icon {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  opacity: 0.6;
+  color: white;
+  height: 100%;
+}
+
+/* Results Section */
+
+.results {
+  border-radius: 6px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.results_list {
+  list-style: none;
+  padding: 8px;
+}
+
+.results_list_item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  color: var(--light);
+  padding: 8px;
+  box-shadow: 0px 0px 25px -3px var(--border-colour);
+  border: 1px solid rgba(238, 238, 238, 0.1);
+  border-radius: 6px;
+}
+
+.results_list_item_details {
+}
+
+.results_list_item_title {
+  display: flex;
+  color: var(--light);
+}
+
+.results_list_item_subtitle {
+  color: var(--light);
+  font-size: 0.8rem;
+}
+
+.results_list_item_company_name {
+  color: var(--light);
+}
+
+.results_list_item_company_number,
+.drawer_company_number {
+  color: var(--light);
+  font-size: 0.8rem;
+  opacity: 0.5;
+  font-style: italic;
+}
+
+.primary_button {
+  background-color: var(--primary);
+  color: var(--dark);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: center;
+  height: auto;
+  width: 80px;
+  padding: 4px;
+  border-radius: 4px;
+  margin-left: auto;
+  margin-right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button_contents {
+  display: flex;
+  align-items: center;
+  vertical-align: bottom;
+}
+
+/* Company Details Drawer */
+.drawer_container {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  z-index: 1;
+  background: rgb(123, 0, 245);
+  background: linear-gradient(
+    0deg,
+    rgba(123, 0, 245, 1) 0%,
+    rgba(56, 93, 177, 1) 100%
+  );
+  transition: all;
+}
+
+.drawer_container--isopen {
+  left: 0;
+}
+
+.drawer_contents {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--light);
+}
+
+.drawer_favorite_bar {
+  display: flex;
+  height: 100%;
+  min-height: 40px;
+}
+
+.drawer_favorite_bar h3 {
+  margin: auto 0;
+}
+
+/* Company Table */
+.company_table {
+  border: 1px solid var(--border-colour);
+  height: 100%;
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 0;
+  border-spacing: 1px;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.company_table td {
+  padding: 8px;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--border-colour);
+}
+
+.company_table td:first-child {
+  border-right: 1px solid var(--border-colour);
+  opacity: 0.8;
+}
+
+.company_table tr:last-child td:last-child {
+  border-bottom: none;
+}
+
+.company_table tr:nth-last-child(1) td:nth-last-child(2) {
+  border-bottom: none;
+}
+
+.drawer_company_headings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-around;
+  border-radius: 6px;
+}
+
+.drawer_company_headings h3 {
+  text-align: center;
+  padding: 6px;
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.drawer_company_headings h3:first-child {
+  background-color: transparent;
+}
