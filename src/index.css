@@ -35,6 +35,7 @@ button {
 
 body {
   display: flex;
+  min-height: 100vh;
   justify-content: center;
   background: rgb(123, 0, 245);
   background: linear-gradient(
@@ -48,8 +49,79 @@ main {
   display: flex;
   gap: 20px;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
+  width: 100%;
+  max-width: 600px;
   padding: 1rem;
+}
+
+#loading {
+  display: block;
+  width: 50px;
+  height: 50px;
+  margin: 20px auto;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav_links {
+  display: flex;
+  justify-content: space-between;
+  min-width: 200px;
+}
+
+.login_form {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: var(--dark);
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 300px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  padding: 8px;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+  transition: all 0.8s ease-in-out;
+}
+
+.login_form_visible {
+  visibility: visible;
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  background-color: darkred;
+  color: white;
+  font-weight: 800;
+  padding: 12px;
 }
 
 .main_title {
@@ -73,7 +145,31 @@ main {
   height: 100%;
 }
 
-#company_search_input {
+.form_field {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.login_input {
+  height: auto;
+  border: 1px solid rgba(245, 245, 245, 0.243);
+  border-radius: 16px;
+}
+
+#login_button {
+  margin: 10px auto;
+  width: 100%;
+  border-radius: 16px;
+  border: none;
+}
+
+.input_label {
+  color: white;
+  margin: 10px auto;
+}
+
+.input_field {
   height: 100%;
   width: 100%;
   padding: 8px;
@@ -81,7 +177,7 @@ main {
   color: var(--light);
 }
 
-#company_search_input::placeholder {
+.input_field::placeholder {
   color: var(--light);
   opacity: 0.4;
 }
@@ -98,30 +194,40 @@ main {
 /* Results Section */
 
 .results {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 720px;
   border-radius: 6px;
-  height: 100%;
   background-color: rgba(255, 255, 255, 0.04);
 }
 
 .results_list {
   list-style: none;
+  overflow: hidden;
   padding: 8px;
+  width: 100%;
 }
 
 .results_list_item {
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
+  max-width: 100%;
+  width: auto;
+  height: 140px;
   min-height: 120px;
   color: var(--light);
   padding: 8px;
+  margin-bottom: 8px;
   box-shadow: 0px 0px 25px -3px var(--border-colour);
   border: 1px solid rgba(238, 238, 238, 0.1);
   border-radius: 6px;
 }
 
 .results_list_item_details {
+  max-width: 70%;
 }
 
 .results_list_item_title {
@@ -146,6 +252,30 @@ main {
   font-style: italic;
 }
 
+.pagination_controls {
+  display: flex;
+  margin-top: 6px;
+  padding: 6px;
+  justify-content: space-between;
+}
+
+.pagination_button {
+  background-color: var(--primary);
+  color: var(--dark);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: center;
+  height: auto;
+  min-height: 40px;
+  width: 80px;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.pagination_button_next {
+  margin-left: auto;
+}
+
 .primary_button {
   background-color: var(--primary);
   color: var(--dark);
@@ -153,11 +283,12 @@ main {
   font-weight: 700;
   text-align: center;
   height: auto;
+  min-height: 40px;
   width: 80px;
   padding: 4px;
   border-radius: 4px;
-  margin-left: auto;
-  margin-right: 0;
+  /* margin-left: auto;
+  margin-right: 0; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -171,35 +302,65 @@ main {
 
 /* Company Details Drawer */
 .drawer_container {
-  position: absolute;
+  position: fixed;
+  overflow: hidden;
   top: 0;
-  left: -100%;
+  left: 0;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   padding: 12px;
-  z-index: 1;
+  z-index: 1000;
   background: rgb(123, 0, 245);
   background: linear-gradient(
     0deg,
     rgba(123, 0, 245, 1) 0%,
     rgba(56, 93, 177, 1) 100%
   );
-  transition: all;
+  transition: all 0.4s ease-in-out;
+  border-right: 1px solid var(--border-colour);
+  box-shadow: 24px 0px 15px -20px rgba(0, 0, 0, 0.1);
 }
 
 .drawer_container--isopen {
-  left: 0;
+  transform: translateX(0);
+}
+
+.drawer_close_button {
+  position: fixed;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 10px;
+  right: 10px;
+  color: var(--light);
+  border-radius: 6px;
+  padding: 8px;
+  background-color: var(--dark);
+  opacity: 0.6;
 }
 
 .drawer_contents {
   display: flex;
+  overflow: auto;
   flex-direction: column;
   gap: 10px;
   color: var(--light);
+  margin: 0 auto;
+  max-height: 100%;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.drawer_contents::-webkit-scrollbar {
+  display: none;
 }
 
 .drawer_favorite_bar {
   display: flex;
+  justify-content: space-between;
   height: 100%;
   min-height: 40px;
 }
@@ -252,6 +413,12 @@ main {
   background-color: rgba(255, 255, 255, 0.04);
 }
 
-.drawer_company_headings h3:first-child {
+.drawer_company_headings .unselected {
   background-color: transparent;
+}
+
+@media only screen and (min-width: 800px) {
+  .drawer_container {
+    width: 50%;
+  }
 }
