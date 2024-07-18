@@ -4,14 +4,19 @@ import ResultsListItem from "./ResultsListItem";
 import Spinner from "./Spinner";
 
 function ResultsList() {
-  const { state, companiesSliced, handlePageChange, debouncedSearchText } =
-    useCompaniesContext();
+  const {
+    state,
+    companiesSliced,
+    handlePageChange,
+    debouncedSearchText,
+    totalPages,
+  } = useCompaniesContext();
   useSearchQuery(debouncedSearchText);
 
   return (
     <div className="results">
-      {state.isLoading ? (
-        <Spinner />
+      {state.isResultsLoading ? (
+        <Spinner width={100} height={100} />
       ) : (
         <ul className="results_list">
           {companiesSliced?.map((company: TCompanyType) => (
@@ -31,14 +36,16 @@ function ResultsList() {
               Prev
             </button>
           )}
-          <button
-            className="pagination_button pagination_button_next"
-            onClick={() => {
-              handlePageChange("next");
-            }}
-          >
-            Next
-          </button>
+          {state.currentPage <= totalPages && (
+            <button
+              className="pagination_button pagination_button_next"
+              onClick={() => {
+                handlePageChange("next");
+              }}
+            >
+              Next
+            </button>
+          )}
         </div>
       )}
     </div>

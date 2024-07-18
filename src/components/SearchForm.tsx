@@ -6,8 +6,6 @@ function SearchForm() {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
-    dispatch({ type: "SET_INDEX", payload: 1 });
-    dispatch({ type: "SET_CURRENT_PAGE", payload: 1 });
     dispatch({ type: "SET_SEARCH_TERM", payload: searchTerm });
   };
 

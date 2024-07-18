@@ -1,7 +1,17 @@
 import React from "react";
 
-function Spinner() {
-  return <div id="loading"></div>;
+type TSpinnerProps = {
+  width: number;
+  height: number;
+};
+
+function Spinner({ width, height }: TSpinnerProps) {
+  return (
+    <div
+      style={{ width: `${width}px`, height: `${height}px` }}
+      id="loading"
+    ></div>
+  );
 }
 
 export default Spinner;

@@ -2,9 +2,17 @@ export type TCompanyStateType = {
   activeId: string;
   searchTerm: string;
   companies: TCompanyType[];
-  isLoading: boolean;
+  isResultsLoading: boolean;
+  isCompanyLoading: boolean;
   index: number;
   currentPage: number;
+  totalResults: number;
+};
+
+export type TFollowedCompanyResponse = {
+  id: number;
+  user_id: number;
+  company_id: string;
 };
 
 export type TCompanyType = {
@@ -20,6 +28,16 @@ export type TCompanyTypeExpanded = TCompanyType & {
   sic_codes: string[];
   date_of_creation: string;
   date_of_cessation: string;
+  registered_office_address: TRegisteredAddress;
+};
+
+export type TRegisteredAddress = {
+  address_line_1: string;
+  address_line_2: string;
+  locality: string;
+  region: string;
+  postal_code: string;
+  country: string;
 };
 
 export type Classification = {
@@ -83,4 +101,31 @@ export type TFullCompany = {
   companyDetails: TCompanyTypeExpanded;
   companyCharges: TCharges[];
   companyOfficers: TOfficer[];
+};
+
+export type TLoginRequestBody = {
+  email: string;
+  password: string;
+};
+
+export type TRegisterRequestBody = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+};
+
+export type TUser = {
+  email: string;
+  firstName: string;
+  lastName: string;
+};
+
+export type TUserState = {
+  user: TUser | null;
+  followedCompanies: TCompanyType[];
+  isLoggedIn: boolean;
+  isLoading: boolean;
+  isError: boolean;
+  errorMessage: string;
 };

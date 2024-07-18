@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PrimaryButton from "./PrimaryButton";
 import LoginForm from "./LoginForm";
+import { useUserContext } from "../hooks/hooks";
+import { ArchiveIcon } from "@radix-ui/react-icons";
+import RegisterForm from "./RegisterForm";
 
 function Header() {
   const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
+  const { user, logoutUser, isLoggedIn, handleUserDrawerChange } =
+    useUserContext();
+
   return (
     <>
       <nav className="nav">
@@ -11,15 +18,33 @@ function Header() {
         <div className="nav_links">
           <PrimaryButton
             onClick={() => {
-              setShowLogin(true);
+              isLoggedIn ? logoutUser() : setShowLogin(true);
             }}
           >
-            Login
+            {isLoggedIn ? user?.email : "Login"}
           </PrimaryButton>
-          <PrimaryButton onClick={() => {}}>Register</PrimaryButton>
+          {!isLoggedIn && (
+            <PrimaryButton onClick={() => setShowRegister(true)}>
+              Register
+            </PrimaryButton>
+          )}
+          {isLoggedIn && (
+            <PrimaryButton onClick={() => handleUserDrawerChange(true)}>
+              <ArchiveIcon />
+            </PrimaryButton>
+          )}
         </div>
       </nav>
-      <LoginForm isVisible={showLogin} />
+      {showLogin ? (
+        <LoginForm isVisible={showLogin} setVisible={setShowLogin} />
+      ) : (
+        ""
+      )}
+      {showRegister ? (
+        <RegisterForm isVisible={showRegister} setVisible={setShowRegister} />
+      ) : (
+        ""
+      )}
     </>
   );
 }
